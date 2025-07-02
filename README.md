@@ -160,3 +160,94 @@ WORKDIR /app
 COPY . .
 RUN pip install -r requirements.txt
 CMD ["uvicorn", "inference_api:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# 🧠 Benchmark NLP Model for Classification
+
+A lightweight, extendable NLP classification model built with PyTorch and Hugging Face Transformers, benchmarked on standard datasets (IMDb, AG News, etc.) with CI/CD pipeline support.
+
+---
+
+## 🏗️ Architecture
+- **Transformer-based classifier** (BERT, DistilBERT)
+- **Training loop**: PyTorch Lightning
+- **Experiment tracking**: MLflow
+- **Model serving**: FastAPI endpoint
+- **CI/CD**: GitHub Actions for linting, testing, deployment
+
+---
+
+## 📦 Install
+```bash
+git clone https://github.com/yourname/benchmark_nlp_model.git
+cd benchmark_nlp_model
+pip install -r requirements.txt
+```
+
+---
+
+## 🚀 Training
+```bash
+python train.py --model_name bert-base-uncased --dataset imdb
+```
+
+---
+
+## 🧪 Inference API
+```bash
+uvicorn api.main:app --reload
+```
+Then visit: `http://localhost:8000/docs`
+
+---
+
+## 🛠️ CI/CD Pipeline (GitHub Actions)
+
+### .github/workflows/main.yml
+```yaml
+name: NLP CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: |
+          pytest
+
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Build Docker image
+        run: |
+          docker build -t benchmark-nlp .
+```
+
+---
+
+
+
+
+
+
+
